@@ -106,6 +106,28 @@ const en = {
   'Termeni și condiții': 'Terms and conditions',
   'Confidențialitate': 'Privacy',
   'Politica de cookie-uri': 'Cookie policy',
+
+  /* bannerul de cookie-uri (build.js, `bannerCookie`) și harta blocată */
+  'Setări cookie-uri': 'Cookie settings',
+  'Cookie-uri și date salvate în browser': 'Cookies and data saved in your browser',
+  'Folosim doar ce e strict necesar pentru coșul de cumpărături. Cu acordul dumneavoastră, încărcăm și harta Google Maps de pe pagina de contact, care plasează cookie-uri Google, și ținem minte datele de livrare pentru comanda următoare. Alegerea se aplică pe tot site-ul și o puteți schimba oricând din subsol, la „Setări cookie-uri”.':
+    'We only use what is strictly necessary for the shopping cart. With your consent, we also load the Google Maps map on the contact page, which sets Google cookies, and remember your delivery details for your next order. Your choice applies to the whole site and you can change it at any time from the footer, under “Cookie settings”.',
+  'Ce înseamnă fiecare opțiune': 'What each option means',
+  'Accept': 'Accept',
+  'Accept doar esențiale': 'Accept essential only',
+  'Refuz': 'Reject',
+  'Coșul, datele de livrare memorate pentru data viitoare și harta Google Maps.':
+    'The cart, your delivery details remembered for next time, and the Google Maps map.',
+  'Coșul rămâne salvat între vizite. Harta Google nu se încarcă, iar datele de livrare nu se păstrează după închiderea filei.':
+    'The cart stays saved between visits. The Google map is not loaded, and your delivery details are not kept after you close the tab.',
+  'Nimic în plus față de strictul necesar: coșul se păstrează doar în fila deschisă și dispare când o închideți. Harta Google nu se încarcă.':
+    'Nothing beyond what is strictly necessary: the cart is kept only in the open tab and disappears when you close it. The Google map is not loaded.',
+  'Alegerea actuală:': 'Your current choice:',
+  'Harta este furnizată de Google Maps, care plasează cookie-uri proprii. Se încarcă doar cu acordul dumneavoastră.':
+    'The map is provided by Google Maps, which sets its own cookies. It is only loaded with your consent.',
+  'Afișează harta': 'Show the map',
+  'Deschide în Google Maps': 'Open in Google Maps',
+
   'Cum cumpăr': 'How to buy',
   'Metode de plată': 'Payment methods',
   'Transport și retururi': 'Shipping and returns',
@@ -672,6 +694,28 @@ const hu = {
   'Termeni și condiții': 'Általános szerződési feltételek',
   'Confidențialitate': 'Adatvédelem',
   'Politica de cookie-uri': 'Sütikezelési tájékoztató',
+
+  /* bannerul de cookie-uri (build.js, `bannerCookie`) și harta blocată */
+  'Setări cookie-uri': 'Sütibeállítások',
+  'Cookie-uri și date salvate în browser': 'Sütik és a böngészőben tárolt adatok',
+  'Folosim doar ce e strict necesar pentru coșul de cumpărături. Cu acordul dumneavoastră, încărcăm și harta Google Maps de pe pagina de contact, care plasează cookie-uri Google, și ținem minte datele de livrare pentru comanda următoare. Alegerea se aplică pe tot site-ul și o puteți schimba oricând din subsol, la „Setări cookie-uri”.':
+    'Csak azt használjuk, ami a kosárhoz feltétlenül szükséges. Hozzájárulásával a kapcsolati oldalon a Google Maps térképet is betöltjük, amely Google-sütiket helyez el, és megjegyezzük a szállítási adatait a következő rendeléshez. A választása az egész webhelyre érvényes, és bármikor módosíthatja az oldal alján, a „Sütibeállítások” pontnál.',
+  'Ce înseamnă fiecare opțiune': 'Mit jelentenek az egyes lehetőségek',
+  'Accept': 'Elfogadom',
+  'Accept doar esențiale': 'Csak a szükségeseket fogadom el',
+  'Refuz': 'Elutasítom',
+  'Coșul, datele de livrare memorate pentru data viitoare și harta Google Maps.':
+    'A kosár, a következő alkalomra megjegyzett szállítási adatok és a Google Maps térkép.',
+  'Coșul rămâne salvat între vizite. Harta Google nu se încarcă, iar datele de livrare nu se păstrează după închiderea filei.':
+    'A kosár a látogatások között is megmarad. A Google-térkép nem töltődik be, a szállítási adatok pedig nem maradnak meg a lap bezárása után.',
+  'Nimic în plus față de strictul necesar: coșul se păstrează doar în fila deschisă și dispare când o închideți. Harta Google nu se încarcă.':
+    'Semmi a feltétlenül szükségesen túl: a kosár csak a nyitott lapon marad meg, és eltűnik, amikor bezárja. A Google-térkép nem töltődik be.',
+  'Alegerea actuală:': 'Jelenlegi választása:',
+  'Harta este furnizată de Google Maps, care plasează cookie-uri proprii. Se încarcă doar cu acordul dumneavoastră.':
+    'A térképet a Google Maps biztosítja, amely saját sütiket helyez el. Csak az Ön hozzájárulásával töltődik be.',
+  'Afișează harta': 'Térkép megjelenítése',
+  'Deschide în Google Maps': 'Megnyitás a Google Mapsben',
+
   'Cum cumpăr': 'Hogyan vásárolhatok',
   'Metode de plată': 'Fizetési módok',
   'Transport și retururi': 'Szállítás és visszaküldés',

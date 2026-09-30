@@ -234,6 +234,10 @@ window.UG = window.UG || {};
         if (cod && location.protocol === 'file:') url += '?c=' + encodeURIComponent(cod);
       }
 
+      /* La fel alegerea din bannerul de cookie-uri, altfel pagina deschisă
+         l-ar arăta din nou. În afara lui `file://` adresa nu se schimbă. */
+      if (UG.consimtamant) url = UG.consimtamant.adresa(url);
+
       window.location.assign(url);
     }
 

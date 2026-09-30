@@ -511,15 +511,29 @@ ${FIRMA.emailuri.map((e) => `      <a class="contact-line" href="mailto:${e.adre
        partajare; nu cere cheie de API, deci nu depinde de un cont Google al
        firmei și nu poate expira.
 
-       „loading=lazy”: e un cadru străin, cu scripturile și cookie-urile lui.
-       Așa nu se încarcă până nu ajunge omul cu privirea la el, iar pagina de
-       contact pornește la fel de repede ca înainte. -->
-  <div class="harta reveal">
+       E un cadru străin, cu scripturile și cookie-urile lui, deci se încarcă
+       DOAR CU ACORD: adresa stă în data-src, nu în src, iar consimtamant.js
+       o mută la loc după „Accept” din bannerul de cookie-uri.
+       Până atunci browserul nu face nicio cerere către Google. În locul hărții
+       se vede de ce lipsește, un buton care o încarcă o singură dată și
+       legătura către fișa firmei, care merge și fără script.
+
+       „loading=lazy” rămâne: chiar și cu acord, harta nu se încarcă până nu
+       ajunge omul cu privirea la ea. -->
+  <div class="harta reveal" data-consimtamant-gazda>
     <iframe
-      src="${FIRMA.hartaEmbed}"
+      data-consimtamant="terti"
+      data-src="${FIRMA.hartaEmbed}"
       title="Harta către sediul ${esc(FIRMA.nume)}"
       loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen></iframe>
+      allowfullscreen hidden></iframe>
+    <div class="harta__blocata" data-consimtamant-inlocuitor>
+      <p>Harta este furnizată de Google Maps, care plasează cookie-uri proprii. Se încarcă doar cu acordul dumneavoastră.</p>
+      <div class="harta__actiuni">
+        <button type="button" class="btn btn--primary btn--sm" data-consimtamant-o-data>Afișează harta</button>
+        <a class="btn btn--ghost btn--sm" href="${FIRMA.harta}" target="_blank" rel="noopener">Deschide în Google Maps</a>
+      </div>
+    </div>
   </div>
 </div>`;
 

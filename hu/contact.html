@@ -21,18 +21,18 @@
 
 <!-- Pictograma filei poartă aceeași dubă ca sigla din antet. Rămăsese casa cu
      ciocanul, care nu mai apare nicăieri altundeva pe site. -->
-<link rel="icon" href="../assets/img/logo-emblema-duba.png?v=151" type="image/png">
+<link rel="icon" href="../assets/img/logo-emblema-duba.png?v=152" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 
 <script>document.documentElement.classList.add('js');</script>
 
-<link rel="stylesheet" href="../assets/css/tokens.css?v=151">
-<link rel="stylesheet" href="../assets/css/base.css?v=151">
-<link rel="stylesheet" href="../assets/css/door.css?v=151">
-<link rel="stylesheet" href="../assets/css/components.css?v=151">
-<link rel="stylesheet" href="../assets/css/switcher.css?v=151">
+<link rel="stylesheet" href="../assets/css/tokens.css?v=152">
+<link rel="stylesheet" href="../assets/css/base.css?v=152">
+<link rel="stylesheet" href="../assets/css/door.css?v=152">
+<link rel="stylesheet" href="../assets/css/components.css?v=152">
+<link rel="stylesheet" href="../assets/css/switcher.css?v=152">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Organization","HomeAndConstructionBusiness"],"@id":"https://usa-garaj.ro/#firma","name":"Usa-garaj.ro","legalName":"ABBA CONFORT DELIVERY SRL","url":"https://usa-garaj.ro/","taxID":"49968876","identifier":[{"@type":"PropertyValue","name":"CUI","value":"49968876"},{"@type":"PropertyValue","name":"Nr. Registrul Comerțului","value":"J2024000637154"}],"telephone":"+40731366613","email":"office@abbaconfort.ro","address":{"@type":"PostalAddress","streetAddress":"Strada Radu de la Afumați 17, Sc. G","addressLocality":"Târgoviște","postalCode":"130150","addressRegion":"Dâmbovița","addressCountry":"RO"},"areaServed":"RO"}</script>
 
@@ -40,6 +40,33 @@
 
 <body>
 <a class="skip-link" href="#continut">Ugrás a fő tartalomra</a>
+
+<!-- Primul în document, după legătura de salt: cine navighează cu tastatura
+     sau cu cititor de ecran ajunge la el înaintea paginii. Pe ecran stă jos. -->
+<section class="cookie" id="cookie" aria-labelledby="cookie-titlu" hidden>
+  <div class="cookie__cutie">
+    <h2 class="cookie__titlu" id="cookie-titlu" tabindex="-1">Sütik és a böngészőben tárolt adatok</h2>
+    <p class="cookie__text">Csak azt használjuk, ami a kosárhoz feltétlenül szükséges. Hozzájárulásával a kapcsolati oldalon a Google Maps térképet is betöltjük, amely Google-sütiket helyez el, és megjegyezzük a szállítási adatait a következő rendeléshez. A választása az egész webhelyre érvényes, és bármikor módosíthatja az oldal alján, a „Sütibeállítások” pontnál.</p>
+    <details class="cookie__detalii">
+      <summary>Mit jelentenek az egyes lehetőségek</summary>
+      <dl>
+        <dt>Elfogadom</dt>
+        <dd>A kosár, a következő alkalomra megjegyzett szállítási adatok és a Google Maps térkép.</dd>
+        <dt>Csak a szükségeseket fogadom el</dt>
+        <dd>A kosár a látogatások között is megmarad. A Google-térkép nem töltődik be, a szállítási adatok pedig nem maradnak meg a lap bezárása után.</dd>
+        <dt>Elutasítom</dt>
+        <dd>Semmi a feltétlenül szükségesen túl: a kosár csak a nyitott lapon marad meg, és eltűnik, amikor bezárja. A Google-térkép nem töltődik be.</dd>
+      </dl>
+    </details>
+    <p class="cookie__actual" data-cookie-actual hidden>Jelenlegi választása: <b data-alegere="toate" hidden>Elfogadom</b><b data-alegere="esentiale" hidden>Csak a szükségeseket fogadom el</b><b data-alegere="refuz" hidden>Elutasítom</b></p>
+    <div class="cookie__butoane">
+      <button type="button" class="btn btn--primary" data-cookie-alege="toate">Elfogadom</button>
+      <button type="button" class="btn cookie__btn" data-cookie-alege="esentiale">Csak a szükségeseket fogadom el</button>
+      <button type="button" class="btn cookie__btn" data-cookie-alege="refuz">Elutasítom</button>
+    </div>
+    <p class="cookie__legaturi"><a href="politica-de-cookies.html">Sütikezelési tájékoztató</a> <span aria-hidden="true">·</span> <a href="confidentialitate.html">Adatvédelem</a></p>
+  </div>
+</section>
 
 <div class="idbar">
   <div class="wrap wrap--wide idbar__inner">
@@ -178,15 +205,29 @@
        partajare; nu cere cheie de API, deci nu depinde de un cont Google al
        firmei și nu poate expira.
 
-       „loading=lazy”: e un cadru străin, cu scripturile și cookie-urile lui.
-       Așa nu se încarcă până nu ajunge omul cu privirea la el, iar pagina de
-       contact pornește la fel de repede ca înainte. -->
-  <div class="harta reveal">
+       E un cadru străin, cu scripturile și cookie-urile lui, deci se încarcă
+       DOAR CU ACORD: adresa stă în data-src, nu în src, iar consimtamant.js
+       o mută la loc după „Accept” din bannerul de cookie-uri.
+       Până atunci browserul nu face nicio cerere către Google. În locul hărții
+       se vede de ce lipsește, un buton care o încarcă o singură dată și
+       legătura către fișa firmei, care merge și fără script.
+
+       „loading=lazy” rămâne: chiar și cu acord, harta nu se încarcă până nu
+       ajunge omul cu privirea la ea. -->
+  <div class="harta reveal" data-consimtamant-gazda>
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d25.4721157!3d44.9168683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b2e73d5f9c0d79:0x5f467a6af5b876b2!2sABBA%20CONFORT%20SOLUTIONS%20HOMES%20SRL!5e0"
+      data-consimtamant="terti"
+      data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d25.4721157!3d44.9168683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b2e73d5f9c0d79:0x5f467a6af5b876b2!2sABBA%20CONFORT%20SOLUTIONS%20HOMES%20SRL!5e0"
       title="Harta către sediul ABBA CONFORT DELIVERY SRL"
       loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-      allowfullscreen></iframe>
+      allowfullscreen hidden></iframe>
+    <div class="harta__blocata" data-consimtamant-inlocuitor>
+      <p>A térképet a Google Maps biztosítja, amely saját sütiket helyez el. Csak az Ön hozzájárulásával töltődik be.</p>
+      <div class="harta__actiuni">
+        <button type="button" class="btn btn--primary btn--sm" data-consimtamant-o-data>Térkép megjelenítése</button>
+        <a class="btn btn--ghost btn--sm" href="https://maps.app.goo.gl/6LsgAhzYNR7dU7gA7" target="_blank" rel="noopener">Megnyitás a Google Mapsben</a>
+      </div>
+    </div>
   </div>
 </div>
   </div>
@@ -229,7 +270,7 @@
         <!-- Emblema întreagă: în subsol e lățime, deci se citește și numele
              firmei, și sloganul. Fondul alb a fost scos din fișier, deci
              cerneala bleumarin stă direct pe portocaliul subsolului. -->
-        <img class="ftr__sigla" src="../assets/img/logo-emblema.png?v=151"
+        <img class="ftr__sigla" src="../assets/img/logo-emblema.png?v=152"
              alt="ABBA CONFORT DELIVERY SRL — mereu mai devreme"
              width="1192" height="532" decoding="async">
       </div>
@@ -250,6 +291,7 @@
             <li><a href="termeni-si-conditii.html">Általános szerződési feltételek</a></li>
             <li><a href="confidentialitate.html">Adatvédelem</a></li>
             <li><a href="politica-de-cookies.html">Sütikezelési tájékoztató</a></li>
+            <li><a href="politica-de-cookies.html" data-cookie-setari>Sütibeállítások</a></li>
             <li><a href="anulare-tranzactie.html">Tranzakció megszakítva</a></li>
           </ul>
         </div>
@@ -348,13 +390,16 @@
 <script>window.UG_BASE = "";
 window.UG_MAGAZIN = {"store":"https://usa-garaj.ro/wp-json/wc/store/v1","activ":true,"card":false,"tel":"0731 366 613"};
 </script>
-<script src="../assets/js/catalog.js?v=151"></script>
-<script src="../assets/js/door.js?v=151"></script>
-<script src="../assets/js/switcher.js?v=151"></script>
-<script src="../assets/js/lupa.js?v=151"></script>
-<script src="../assets/js/cos.js?v=151"></script>
-<script src="../assets/js/cos-ui.js?v=151"></script>
+<!-- Înaintea coșului: cos.js și checkout.js întreabă de aici unde au voie
+     să-și păstreze datele. -->
+<script src="../assets/js/consimtamant.js?v=152"></script>
+<script src="../assets/js/catalog.js?v=152"></script>
+<script src="../assets/js/door.js?v=152"></script>
+<script src="../assets/js/switcher.js?v=152"></script>
+<script src="../assets/js/lupa.js?v=152"></script>
+<script src="../assets/js/cos.js?v=152"></script>
+<script src="../assets/js/cos-ui.js?v=152"></script>
 
-<script src="../assets/js/app.js?v=151"></script>
+<script src="../assets/js/app.js?v=152"></script>
 </body>
 </html>

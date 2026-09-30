@@ -2799,6 +2799,26 @@ table.spec tbody tr:hover { background: color-mix(in oklab, var(--acc) 5%, trans
 }
 @media (max-width: 560px) { .harta iframe { aspect-ratio: 4 / 3; } }
 
+/* Ce se vede în locul hărții până la acordul pentru cookie-uri. Ocupă exact
+   locul ei, cu același raport, ca pagina să nu sară când harta se încarcă. */
+.harta__blocata {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--s-4);
+  aspect-ratio: 16 / 10;
+  padding: var(--s-5);
+  text-align: center;
+  font-size: var(--t--1);
+  color: var(--ink-muted);
+}
+.harta__blocata p { margin: 0; max-inline-size: 46ch; }
+.harta__actiuni { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); }
+@media (max-width: 560px) { .harta__blocata { aspect-ratio: 4 / 3; } }
+
+/* Fără script butonul n-ar face nimic; rămâne legătura către Google Maps. */
+html:not(.js) [data-consimtamant-o-data] { display: none; }
+
 /* Cartela de ofertă își poartă fundalul portocaliu cu ea, deci are nevoie de
    aceeași cerneală ca banda portocalie — indiferent în ce secțiune stă. Textul
    ei secundar dădea 4,34, iar numărul portocaliu 3,91. */
@@ -2955,3 +2975,89 @@ table.spec tbody tr:hover { background: color-mix(in oklab, var(--acc) 5%, trans
 }
 .calc-cerere__reusit p { margin: 0 0 var(--s-2); }
 .calc-cerere__reusit p:last-child { margin: 0; }
+
+/* ==========================================================================
+   Bannerul de cookie-uri
+   ========================================================================== */
+
+/* Jos pe ecran, peste antet (90) și peste butonul plutitor (80), dar sub
+   panoul de produse (120) și sub lupă (140): cine deschide răsfoirea înainte
+   să aleagă nu are produsele acoperite de banner.
+
+   Nu e un zid: pagina rămâne utilizabilă și cu bannerul deschis. Stratul
+   exterior lasă clicurile să treacă; doar cutia le prinde. */
+.cookie {
+  position: fixed;
+  inset-inline: var(--gutter);
+  inset-block-end: max(var(--s-4), env(safe-area-inset-bottom));
+  z-index: 110;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cookie__cutie {
+  pointer-events: auto;
+  inline-size: 100%;
+  max-inline-size: 46rem;
+  max-block-size: calc(100dvh - 2 * var(--s-4));
+  overflow-y: auto;
+  padding: var(--s-5);
+  background: var(--surface);
+  color: var(--ink-pe-surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-3);
+  box-shadow: var(--shadow-3);
+  animation: cookie-intra var(--d-3) var(--ease-out);
+}
+@keyframes cookie-intra { from { opacity: 0; transform: translateY(12px); } }
+
+.cookie__titlu {
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-1);
+  line-height: var(--lh-snug);
+}
+.cookie__text {
+  margin: 0 0 var(--s-3);
+  font-size: var(--t--1);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.cookie__detalii { margin-block-end: var(--s-4); font-size: var(--t--1); }
+.cookie__detalii summary { cursor: pointer; font-weight: 600; color: var(--acc); }
+.cookie__detalii dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--s-2) var(--s-4);
+  margin: var(--s-3) 0 0;
+  line-height: 1.5;
+}
+.cookie__detalii dt { font-weight: 600; }
+.cookie__detalii dd { margin: 0; color: var(--ink-muted); }
+
+.cookie__actual { margin: 0 0 var(--s-3); font-size: var(--t--1); }
+
+/* Trei butoane de aceeași lățime și aceeași greutate. „Accept” e plin, cu
+   verdele mărcii; celelalte două sunt conturate cu cerneală închisă, deci la
+   fel de lizibile și la fel de ușor de nimerit — nu palide, nu mai mici. */
+.cookie__butoane { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.cookie__butoane .btn { flex: 1 1 11rem; white-space: normal; text-align: center; }
+.cookie__btn {
+  --btn-bg: var(--surface);
+  --btn-ink: var(--ink-pe-surface);
+  --btn-line: var(--ink-muted);
+}
+
+.cookie__legaturi { margin: var(--s-4) 0 0; font-size: var(--t--2); color: var(--ink-faint); }
+.cookie__legaturi a { color: var(--acc); font-weight: 600; }
+
+@media (max-width: 560px) {
+  .cookie__cutie { padding: var(--s-4); }
+  .cookie__detalii dl { grid-template-columns: 1fr; gap: var(--s-1); }
+  .cookie__detalii dd { margin-block-end: var(--s-2); }
+}
+
+/* Cât bannerul e deschis, pagina se poate derula până la capăt pe sub el.
+   Înălțimea o măsoară `consimtamant.js`. */
+html.cookie-deschis body { padding-block-end: calc(var(--cookie-h, 0px) + var(--s-5)); }

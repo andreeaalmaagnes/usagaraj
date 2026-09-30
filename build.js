@@ -463,7 +463,7 @@ const PLATI = {
 
 const ORIGINE = 'https://usa-garaj.ro';
 const IESIRE = __dirname;
-const VER = 'v=151';
+const VER = 'v=152';
 
 /* --- Unelte -------------------------------------------------------------- */
 
@@ -512,6 +512,10 @@ const SUBSOL = {
     ['termeni-si-conditii.html', 'Termeni și condiții'],
     ['confidentialitate.html', 'Confidențialitate'],
     ['politica-de-cookies.html', 'Politica de cookie-uri'],
+    /* Redeschide bannerul de cookie-uri, ca alegerea să poată fi schimbată la
+       fel de ușor cum a fost făcută. Al treilea element e un atribut în plus:
+       `consimtamant.js` prinde clicul. Fără script, duce la politica de mai sus. */
+    ['politica-de-cookies.html', 'Setări cookie-uri', 'data-cookie-setari'],
     ['anulare-tranzactie.html', 'Anulare tranzacție']
   ],
   'Comenzi': [
@@ -562,6 +566,48 @@ function jsonLd(base) {
   });
 }
 
+/**
+ * Bannerul de cookie-uri, pe fiecare pagină.
+ *
+ * Stă ascuns în HTML; `consimtamant.js` îl arată doar cui n-a ales încă. Textul
+ * e aici, nu în script, ca să treacă prin traducerea din `build-limbi.js`.
+ *
+ * Ce spune textul trebuie să rămână ADEVĂRAT: azi, singurul lucru opțional
+ * este harta Google de pe pagina de contact, plus datele de livrare ținute
+ * minte. Un serviciu nou (statistici, pixel de reclamă) se adaugă și aici, iar
+ * `VERSIUNE` din `consimtamant.js` crește, ca toți să fie întrebați din nou.
+ *
+ * Cele trei butoane au aceeași mărime și aceeași greutate a textului. Refuzul
+ * trebuie să fie la fel de ușor de găsit și de apăsat ca acordul — un „Refuz”
+ * mic și palid lângă un „Accept” mare e exact ce sancționează autoritățile.
+ */
+function bannerCookie(base) {
+  return `<section class="cookie" id="cookie" aria-labelledby="cookie-titlu" hidden>
+  <div class="cookie__cutie">
+    <h2 class="cookie__titlu" id="cookie-titlu" tabindex="-1">Cookie-uri și date salvate în browser</h2>
+    <p class="cookie__text">Folosim doar ce e strict necesar pentru coșul de cumpărături. Cu acordul dumneavoastră, încărcăm și harta Google Maps de pe pagina de contact, care plasează cookie-uri Google, și ținem minte datele de livrare pentru comanda următoare. Alegerea se aplică pe tot site-ul și o puteți schimba oricând din subsol, la „Setări cookie-uri”.</p>
+    <details class="cookie__detalii">
+      <summary>Ce înseamnă fiecare opțiune</summary>
+      <dl>
+        <dt>Accept</dt>
+        <dd>Coșul, datele de livrare memorate pentru data viitoare și harta Google Maps.</dd>
+        <dt>Accept doar esențiale</dt>
+        <dd>Coșul rămâne salvat între vizite. Harta Google nu se încarcă, iar datele de livrare nu se păstrează după închiderea filei.</dd>
+        <dt>Refuz</dt>
+        <dd>Nimic în plus față de strictul necesar: coșul se păstrează doar în fila deschisă și dispare când o închideți. Harta Google nu se încarcă.</dd>
+      </dl>
+    </details>
+    <p class="cookie__actual" data-cookie-actual hidden>Alegerea actuală: <b data-alegere="toate" hidden>Accept</b><b data-alegere="esentiale" hidden>Accept doar esențiale</b><b data-alegere="refuz" hidden>Refuz</b></p>
+    <div class="cookie__butoane">
+      <button type="button" class="btn btn--primary" data-cookie-alege="toate">Accept</button>
+      <button type="button" class="btn cookie__btn" data-cookie-alege="esentiale">Accept doar esențiale</button>
+      <button type="button" class="btn cookie__btn" data-cookie-alege="refuz">Refuz</button>
+    </div>
+    <p class="cookie__legaturi"><a href="${base}politica-de-cookies.html">Politica de cookie-uri</a> <span aria-hidden="true">·</span> <a href="${base}confidentialitate.html">Confidențialitate</a></p>
+  </div>
+</section>`;
+}
+
 function pagina(o) {
   const base = o.base || '';
   const nav = NAV.map((n) =>
@@ -572,8 +618,8 @@ function pagina(o) {
         <div>
           <h2>${titlu}</h2>
           <ul>
-            ${linkuri.map(([h, t]) =>
-              `<li><a href="${leg(base, h)}"${extern(h) ? ' rel="noopener nofollow"' : ''}>${t}</a></li>`
+            ${linkuri.map(([h, t, atr]) =>
+              `<li><a href="${leg(base, h)}"${extern(h) ? ' rel="noopener nofollow"' : ''}${atr ? ' ' + atr : ''}>${t}</a></li>`
             ).join('\n            ')}
           </ul>
         </div>`).join('');
@@ -617,6 +663,10 @@ ${o.ld ? `<script type="application/ld+json">${o.ld}</script>` : ''}
 
 <body>
 <a class="skip-link" href="#continut">Sari la conținutul principal</a>
+
+<!-- Primul în document, după legătura de salt: cine navighează cu tastatura
+     sau cu cititor de ecran ajunge la el înaintea paginii. Pe ecran stă jos. -->
+${bannerCookie(base)}
 
 <div class="idbar">
   <div class="wrap wrap--wide idbar__inner">
@@ -789,6 +839,9 @@ window.UG_MAGAZIN = ${JSON.stringify({ store: MAGAZIN.store, activ: MAGAZIN.acti
 ${(o.scripturi || []).includes('calculator.js')
   ? `
 window.UG_CURS = ${JSON.stringify(CURS)};` : ''}</script>
+<!-- Înaintea coșului: cos.js și checkout.js întreabă de aici unde au voie
+     să-și păstreze datele. -->
+<script src="${base}assets/js/consimtamant.js?${VER}"></script>
 <script src="${base}assets/js/catalog.js?${VER}"></script>
 <script src="${base}assets/js/door.js?${VER}"></script>
 <script src="${base}assets/js/switcher.js?${VER}"></script>

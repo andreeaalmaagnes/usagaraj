@@ -61,10 +61,18 @@ window.UG = window.UG || {};
    * Deliberat FĂRĂ e-mail și telefon în cheia păstrată? Nu — sunt necesare la
    * reluare, iar datele rămân pe dispozitivul clientului, nu pleacă nicăieri.
    * Se șterg în momentul în care comanda a reușit.
+   *
+   * Cât rămân depinde de alegerea din bannerul de cookie-uri: pe dispozitiv,
+   * pentru comanda următoare, doar la „Accept”; altfel numai cât fila e
+   * deschisă — destul cât să supraviețuiască întoarcerii de la plată.
    */
+  function depozit() {
+    return UG.depozit ? UG.depozit('functionale') : localStorage;
+  }
+
   function incarcaDate() {
     try {
-      var d = JSON.parse(localStorage.getItem(CHEIE_DATE) || '{}');
+      var d = JSON.parse(depozit().getItem(CHEIE_DATE) || '{}');
       Object.keys(d).forEach(function (k) {
         var c = form.elements[k];
         if (c) c.value = d[k];
@@ -73,11 +81,11 @@ window.UG = window.UG || {};
   }
 
   function salveazaDate(date) {
-    try { localStorage.setItem(CHEIE_DATE, JSON.stringify(date)); } catch (e) { /* mod privat */ }
+    try { depozit().setItem(CHEIE_DATE, JSON.stringify(date)); } catch (e) { /* mod privat */ }
   }
 
   UG.checkoutUitaDate = function () {
-    try { localStorage.removeItem(CHEIE_DATE); } catch (e) { /* nimic */ }
+    try { depozit().removeItem(CHEIE_DATE); } catch (e) { /* nimic */ }
   };
 
 

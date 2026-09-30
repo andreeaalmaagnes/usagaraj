@@ -87,9 +87,18 @@ window.UG = window.UG || {};
     }) : [];
   }
 
+  /**
+   * Depozitul coșului: `localStorage` de regulă, `sessionStorage` dacă
+   * vizitatorul a refuzat cookie-urile — atunci coșul trăiește doar cât fila.
+   * Alegerea o face `consimtamant.js`; fără el, rămâne comportamentul vechi.
+   */
+  function depozit() {
+    return UG.depozit ? UG.depozit('esentiale') : localStorage;
+  }
+
   function dinLocal() {
     try {
-      var v = localStorage.getItem(CHEIE);
+      var v = depozit().getItem(CHEIE);
       return v === null ? null : curata(JSON.parse(v));
     } catch (e) {
       return null;
@@ -173,7 +182,7 @@ window.UG = window.UG || {};
 
   function scrie() {
     var s = JSON.stringify(randuri);
-    try { localStorage.setItem(CHEIE, s); } catch (e) { /* mod privat sau blocat */ }
+    try { depozit().setItem(CHEIE, s); } catch (e) { /* mod privat sau blocat */ }
     try { window.name = PREFIX + s; } catch (e) { /* nimic de făcut */ }
   }
 
@@ -342,11 +351,11 @@ window.UG = window.UG || {};
   var CHEIE_JETON = 'ug-cart-token';
 
   UG.cosJeton = function () {
-    try { return localStorage.getItem(CHEIE_JETON) || ''; } catch (e) { return ''; }
+    try { return depozit().getItem(CHEIE_JETON) || ''; } catch (e) { return ''; }
   };
 
   UG.cosUitaJeton = function () {
-    try { localStorage.removeItem(CHEIE_JETON); } catch (e) { /* nimic */ }
+    try { depozit().removeItem(CHEIE_JETON); } catch (e) { /* nimic */ }
   };
 
   /**
@@ -419,7 +428,7 @@ window.UG = window.UG || {};
     }).then(function (r) {
       var nou = r.headers.get('Cart-Token');
       if (nou) {
-        try { localStorage.setItem(CHEIE_JETON, nou); } catch (e) { /* mod privat */ }
+        try { depozit().setItem(CHEIE_JETON, nou); } catch (e) { /* mod privat */ }
       }
       return r.json().then(function (date) {
         if (!r.ok) {
